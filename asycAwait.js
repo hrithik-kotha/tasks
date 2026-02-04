@@ -2,7 +2,7 @@ function* asyncAwait(){
     console.log("A");
     let result = yield new Promise((resolve,reject)=>{
         setTimeout(() => {
-           resolve("resolved after 2 seconds");
+           reject("rejected after 2 seconds");
                 console.log("IN")
         }, 2000);
         
@@ -23,7 +23,14 @@ function run(call)
 {
 let {value,done}=call.next();
     if(!done){
-        value.then((res,rej)=>{
+        value
+        .then((res,rej)=>{
+            console.log(res)
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+        .finally(()=>{
             run(k);
         })
     }
